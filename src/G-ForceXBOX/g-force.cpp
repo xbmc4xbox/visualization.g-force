@@ -31,7 +31,7 @@ static LPDIRECT3DDEVICE8					m_pd3dDevice=NULL;
 static LPDIRECT3DTEXTURE8					m_pTexture=NULL;				// textures
 static LPDIRECT3DVERTEXBUFFER8		m_pVB=NULL;
 static D3DCOLOR						m_colDiffuse;
-static signed short int		m_sData[2][512];
+static float						m_sData[2][512];
 static unsigned int*	 		m_pFrameBuffer=NULL;
 static int                m_iPosX;
 static int                m_iPosY;
@@ -265,7 +265,7 @@ extern "C" void Start(int iChannels, int iSamplesPerSec, int iBitsPerSample, con
 //-- Audiodata ----------------------------------------------------------------
 // Called by XBMC to pass new audio data to the vis
 //-----------------------------------------------------------------------------
-extern "C" void AudioData(const short* pAudioData, int iAudioDataLength, float *pFreqData, int iFreqDataLength)
+extern "C" void AudioData(const float* pAudioData, int iAudioDataLength, float *pFreqData, int iFreqDataLength)
 {
 	memset(m_sData,0,sizeof(m_sData));
 	int ipos=0;
@@ -273,16 +273,8 @@ extern "C" void AudioData(const short* pAudioData, int iAudioDataLength, float *
   {
 	  for (int i=0; i < iAudioDataLength; i+=2)
 	  {
-		  m_sData[0][ipos]=2*pAudioData[i];
-		  if (pAudioData[i]>16383)
-			  m_sData[0][ipos] = 32767;
-		  if (pAudioData[i]<-16384)
-			  m_sData[0][ipos] = -32768;
-		  m_sData[1][ipos]=2*pAudioData[i+1];
-		  if (pAudioData[i+1]>16383)
-			  m_sData[1][ipos] = 32767;
-		  if (pAudioData[i+1]<-16384)
-			  m_sData[1][ipos] = -32768;
+		  m_sData[0][ipos] = pAudioData[i];    // left channel
+		  m_sData[1][ipos] = pAudioData[i+1];  // right channel
 		  ipos++;
 		  if (ipos >= 512) break;
 	  }

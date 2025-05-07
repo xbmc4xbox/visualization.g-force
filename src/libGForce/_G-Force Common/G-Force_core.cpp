@@ -16,11 +16,11 @@ void GForceCore::setDrawParameter(unsigned long *inFrameBuffer, int inPitch) {
 	gForce->setDrawParameter(inFrameBuffer, inPitch);
 }
 
-void GForceCore::renderSample( long time , signed short int audioData[2][512]) {
+void GForceCore::renderSample( long time , float audioData[2][512]) {
 	static float floatBuffer[512];
 	int i;
 	for(i=0; i<512; i++)
-		floatBuffer[i] = audioData[0][i] >> 8;
+		floatBuffer[i] = audioData[0][i];
 
 	gForce->RecordSample( time, floatBuffer, .0061f, 250 );
 }

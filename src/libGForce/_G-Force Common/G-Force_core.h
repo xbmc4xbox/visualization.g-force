@@ -13,7 +13,7 @@ public:
 	~GForceCore();
 
 	void setDrawParameter(unsigned long *inFrameBuffer, int inPitch);
-	void renderSample( long time , signed short int audioData[2][512]);
+	void renderSample( long time , float audioData[2][512]);
 	void SetWinPort( Rect* inRect );
 };
 
