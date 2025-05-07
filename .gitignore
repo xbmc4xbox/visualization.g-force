@@ -1,0 +1,9 @@
+BUILD/
+Release/
+Debug/
+src/include/
+*.vis
+*.ncb
+*.suo
+visualization.*.zip
+libGForce.lib
